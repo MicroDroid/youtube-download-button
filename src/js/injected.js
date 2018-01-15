@@ -8,6 +8,8 @@ require('../img/32x32.png');
 require('../css/injected.css');
 
 var ytdl = require('ytdl-core');
+var sanitizeFilename = require('sanitize-filename');
+
 var isDark = document.documentElement.getAttribute('dark') !== null;
 
 var downloadBtn = document.createElement('button');
@@ -34,7 +36,6 @@ function getInfo() {
 
 	var loading = document.createElement('a');
 	loading.innerText = 'Loading..';
-	loading.download = true;
 	loading.className = 'ytd-video';
 	dropdownMenu.append(loading);
 
@@ -81,12 +82,13 @@ function getInfo() {
 			var format = data.formats[i];
 			link = document.createElement('a');
 			link.href = format.url;
+			link.target = '_blank';
 			if (format.isAudio)
 				link.innerText = 'Audio: ' + format.audioBitrate + 'kbps' + '/' + format.audioEncoding;
 			else
 				link.innerText = 'Video: ' + format.resolution + '/' + format.encoding + ' @ ' + format.bitrate 
 					+ 'Mbps' + (format.fps ? ' ~' + format.fps + 'fps' : '');
-			link.download = true;
+			link.download = sanitizeFilename(data.title);
 			link.className = format.isAudio ? 'ydb-audio' : 'ydb-video';
 			dropdownMenu.append(link);
 		}
