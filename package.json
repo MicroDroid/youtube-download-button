@@ -20,7 +20,6 @@
     "write-file-webpack-plugin": "3.4.2"
   },
   "dependencies": {
-    "fetch-readablestream": "^0.1.0",
     "ytdl-core": "^0.18.7"
   }
 }
