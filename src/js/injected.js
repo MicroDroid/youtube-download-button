@@ -82,10 +82,10 @@ function getInfo() {
 }
 
 var observer = new MutationObserver(function() {
-	subscribeBtn = document.getElementsByTagName('ytd-subscribe-button-renderer')[0];
+	subscribeBtn = document.getElementById('subscribe-button');
 	if (subscribeBtn) {
 		observer.disconnect();	
-		subscribeBtn.parentNode.parentNode.insertBefore(dropdown, subscribeBtn.parentNode);
+		subscribeBtn.parentNode.insertBefore(dropdown, subscribeBtn);
 	}
 });
 
