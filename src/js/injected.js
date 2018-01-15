@@ -43,6 +43,11 @@ function getInfo() {
 			return format;
 		});
 
+		// Remove video-only sources
+		data.formats = data.formats.filter(function(format) {
+			return !!format.audioBitrate;
+		});
+
 		// Brain-twister incoming!
 		data.formats = data.formats.sort(function(a, b) {
 			if (a.type.startsWith('audio'))
