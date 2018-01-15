@@ -1,7 +1,7 @@
 {
   "name": "YouTube Download Button",
   "description": "Add a 'Download' button next to your 'Subscribe' one",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "content_scripts": [
       {
           "matches": ["http://www.youtube.com/watch?v=*", "https://www.youtube.com/watch?v=*"],
