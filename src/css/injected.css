@@ -1,0 +1,66 @@
+#ytb-dl {
+	margin: 8px 0px 8px 8px;
+	font-family: Roboto;
+	line-height: 8px;
+	padding: 10px 16px;
+	background: red;
+	border: 0;
+	border-radius: 2px;
+	text-transform: uppercase;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 0.88);
+	height: 36px;
+	font-size: 14px;
+	outline: none;
+	cursor: pointer;
+}
+
+#ytb-dropdown {
+	position: relative;
+}
+
+#ytb-dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #EFEFEF;
+    min-width: 160px;
+    width: 480px;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#ytb-dropdown-menu a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+#ytb-dropdown-menu a:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+#ytb-dropdown:hover #ytb-dropdown-menu {
+    display: block;
+}
+
+.ytb-caret {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 2px;
+	vertical-align: middle;
+	border-top: 4px dashed;
+	border-top: 4px solid;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+}
+
+.ytb-video {
+	color: rgb(72, 0, 0);
+}
+
+.ytb-audio {
+	color: rgb(0, 64, 64);
+}

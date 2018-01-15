@@ -1,0 +1,29 @@
+{
+  "name": "YouTube Download Button",
+  "description": "Add a 'Download' button next to your 'Subscribe' one",
+  "version": "0.1.0",
+  "content_scripts": [
+      {
+          "matches": ["http://www.youtube.com/watch?v=*", "https://www.youtube.com/watch?v=*"],
+          "js": ["injected.bundle.js"]
+      }
+  ],
+  "icons": {
+      "32": "32x32.png",
+      "48": "48x48.png",
+      "96": "96x96.png",
+      "128": "128x128.png",
+      "256": "256x256.png",
+      "512": "512x512.png"
+  },
+  "permissions": [
+    "https://www.youtube.com/",
+    "http://www.youtube.com/"
+  ],
+  "browser_action": {
+      "default_icon": "48x48.png",
+      "default_title": "Youtube Download Button"
+  },
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
