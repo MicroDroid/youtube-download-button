@@ -14,10 +14,13 @@ var downloadBtn = document.createElement('button');
 var dropdownMenu = document.createElement('div');
 var dropdown = document.createElement('div');
 
-dropdownMenu.id = 'ytb-dropdown-menu';
-dropdown.id = 'ytb-dropdown-' + (isDark ? 'dark' : 'light');
+dropdownMenu.id = 'ydb-dropdown-menu';
+dropdown.id = 'ydb-dropdown-' + (isDark ? 'dark' : 'light');
 
-downloadBtn.innerHTML = 'Download <span class="ytb-caret"></span>';
+downloadBtn.innerHTML = 'Download <span class="ydb-caret"></span>';
+downloadBtn.onclick = function() {
+	dropdownMenu.classList.toggle('ydb-show');
+};
 
 dropdown.insertBefore(dropdownMenu, dropdown.firstElementChild);
 dropdown.insertBefore(downloadBtn, dropdown.firstElementChild);
@@ -84,7 +87,7 @@ function getInfo() {
 				link.innerText = 'Video: ' + format.resolution + '/' + format.encoding + ' @ ' + format.bitrate 
 					+ 'Mbps' + (format.fps ? ' ~' + format.fps + 'fps' : '');
 			link.download = true;
-			link.className = format.isAudio ? 'ytb-audio' : 'ytb-video';
+			link.className = format.isAudio ? 'ydb-audio' : 'ydb-video';
 			dropdownMenu.append(link);
 		}
 	});
