@@ -2,7 +2,10 @@
 
 This is a Chrome extension to show a very integrated download button on YouTube.
 
-![Screenshot](https://i.imgur.com/dpKHPu7.png)
+![Light screenshot](https://i.imgur.com/9ODHDXj.png)
+
+![Dark screenshot](https://i.imgur.com/649JLyE.png)
+
 
 > This extension is for *educational* purposes only.
 

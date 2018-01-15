@@ -8,16 +8,14 @@ require('../img/32x32.png');
 require('../css/injected.css');
 
 var ytdl = require('ytdl-core');
-var fetchStream = require('fetch-readablestream');
-
+var isDark = document.documentElement.getAttribute('dark') !== null;
 
 var downloadBtn = document.createElement('button');
 var dropdownMenu = document.createElement('div');
 var dropdown = document.createElement('div');
 
-downloadBtn.id = 'ytb-dl';
 dropdownMenu.id = 'ytb-dropdown-menu';
-dropdown.id = 'ytb-dropdown';
+dropdown.id = 'ytb-dropdown-' + (isDark ? 'dark' : 'light');
 
 downloadBtn.innerHTML = 'Download <span class="ytb-caret"></span>';
 
@@ -31,9 +29,13 @@ function getInfo() {
 		dropdownMenu.removeChild(dropdownMenu.firstChild);
 	}
 
-	ytdl.getInfo(window.location.href).then(function(data) {
-		window.asdf = data;
+	var loading = document.createElement('a');
+	loading.innerText = 'Loading..';
+	loading.download = true;
+	loading.className = 'ytd-video';
+	dropdownMenu.append(loading);
 
+	ytdl.getInfo(window.location.href).then(function(data) {
 		data.formats = data.formats.map(function(format) {
 			format.isAudio = format.type.startsWith('audio');
 			if (format.resolution)
@@ -64,6 +66,8 @@ function getInfo() {
 					return 0;
 		});
 
+		loading.remove();
+
 		var link;
 		for (let i = 0; i < data.formats.length; i++) {
 			var format = data.formats[i];
@@ -84,7 +88,15 @@ function getInfo() {
 var observer = new MutationObserver(function() {
 	subscribeBtn = document.getElementById('subscribe-button');
 	if (subscribeBtn) {
-		observer.disconnect();	
+		observer.disconnect();
+		// YouTube behaves weird on different themes or whatever
+		var subscribeBtnRenderer = subscribeBtn.getElementsByTagName('ytd-subscribe-button-renderer')[0];
+		var subscribePaperBtn = subscribeBtn.getElementsByTagName('paper-button')[0];
+		downloadBtn.style.height = subscribePaperBtn.offsetHeight + 'px';
+		// This element exists only on certain circumstances and adds some padding
+		if (!subscribeBtnRenderer)
+			downloadBtn.style.marginRight = '4px';
+
 		subscribeBtn.parentNode.insertBefore(dropdown, subscribeBtn);
 	}
 });

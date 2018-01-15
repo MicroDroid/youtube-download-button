@@ -1,4 +1,5 @@
-#ytb-dl {
+#ytb-dropdown-dark button,
+#ytb-dropdown-light button {
 	margin: 8px 0px 8px 8px;
 	font-family: Roboto;
 	line-height: 8px;
@@ -15,7 +16,7 @@
 	cursor: pointer;
 }
 
-#ytb-dropdown {
+#ytb-dropdown-dark, #ytb-dropdown-light {
 	position: relative;
 }
 
@@ -23,11 +24,20 @@
     display: none;
     position: absolute;
     right: 0;
-    background-color: #EFEFEF;
     min-width: 160px;
     width: 480px;
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+#ytb-dropdown-light #ytb-dropdown-menu {
+	background: rgba(255, 255, 255);
+	color: #121212;
+}
+
+#ytb-dropdown-dark #ytb-dropdown-menu {
+	background: rgb(36, 36, 36);
+	color: #FEFEFE;
 }
 
 #ytb-dropdown-menu a {
@@ -41,7 +51,8 @@
 	background-color: rgba(0, 0, 0, 0.1);
 }
 
-#ytb-dropdown:hover #ytb-dropdown-menu {
+#ytb-dropdown-dark:hover #ytb-dropdown-menu,
+#ytb-dropdown-light:hover #ytb-dropdown-menu {
     display: block;
 }
 
@@ -57,10 +68,18 @@
 	border-left: 4px solid transparent;
 }
 
-.ytb-video {
+#ytb-dropdown-dark .ytb-video {
+	color: rgb(255, 179, 179);
+}
+
+#ytb-dropdown-dark .ytb-audio {
+	color: rgb(175, 244, 244);
+}
+
+#ytb-dropdown-light .ytb-video {
 	color: rgb(72, 0, 0);
 }
 
-.ytb-audio {
+#ytb-dropdown-light .ytb-audio {
 	color: rgb(0, 64, 64);
 }
