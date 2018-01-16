@@ -126,7 +126,9 @@ observer.observe(document, {
 // I found no better way for now
 var oldHref = window.location.href;
 setInterval(function() {
-	if (oldHref !== window.location.href)
+	if (oldHref !== window.location.href) {
+		dropdownMenu.classList.remove('ydb-show');
 		initialized = false;
+	}
 	oldHref = window.location.href;
 }, 1000);
