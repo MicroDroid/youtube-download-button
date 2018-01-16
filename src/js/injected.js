@@ -7,6 +7,8 @@ require('../img/32x32.png');
 
 require('../css/injected.css');
 
+var initialized = false;
+
 var ytdl = require('ytdl-core');
 var sanitizeFilename = require('sanitize-filename');
 
@@ -21,6 +23,11 @@ dropdown.id = 'ydb-dropdown-' + (isDark ? 'dark' : 'light');
 
 downloadBtn.innerHTML = 'Download <span class="ydb-caret"></span>';
 downloadBtn.onclick = function() {
+	if (!initialized) {
+		getInfo();
+		initialized = true;
+	}
+
 	dropdownMenu.classList.toggle('ydb-show');
 };
 
@@ -119,10 +126,7 @@ observer.observe(document, {
 // I found no better way for now
 var oldHref = window.location.href;
 setInterval(function() {
-	if (oldHref !== window.location.href) {
-		getInfo();
-	}
+	if (oldHref !== window.location.href)
+		initialized = false;
 	oldHref = window.location.href;
 }, 1000);
-
-getInfo();
