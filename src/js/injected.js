@@ -7,6 +7,8 @@ require('../img/32x32.png');
 
 require('../css/injected.css');
 
+var DOM = document.documentElement.innerElement;
+var observed = false;
 var initialized = false;
 
 var ytdl = require('ytdl-core');
@@ -103,30 +105,46 @@ function getInfo() {
 }
 
 var observer = new MutationObserver(function() {
-	subscribeBtn = document.getElementById('subscribe-button');
-	if (subscribeBtn) {
+	subscribeBtn = document.querySelector('#meta-contents #subscribe-button');
+	var subscribePaperBtn = subscribeBtn ? subscribeBtn.getElementsByTagName('paper-button')[0] : null;
+	if (subscribeBtn && subscribePaperBtn) {
 		observer.disconnect();
 		// YouTube behaves weird on different themes or whatever
-		var subscribeBtnRenderer = subscribeBtn.getElementsByTagName('ytd-subscribe-button-renderer')[0];
-		var subscribePaperBtn = subscribeBtn.getElementsByTagName('paper-button')[0];
 		downloadBtn.style.height = subscribePaperBtn.offsetHeight + 'px';
+
 		// This element exists only on certain circumstances and adds some padding
+		var subscribeBtnRenderer = subscribeBtn.getElementsByTagName('ytd-subscribe-button-renderer')[0];
 		if (!subscribeBtnRenderer)
 			downloadBtn.style.marginRight = '4px';
 
 		subscribeBtn.parentNode.insertBefore(dropdown, subscribeBtn);
+
+		injected = true;
 	}
 });
 
-observer.observe(document, {
-	childList: true,
-	subtree: true,
-});
+if (window.location.pathname.startsWith('/watch')) {
+	observer.observe(document, {
+		childList: true,
+		subtree: true,
+	});
+
+	observed = true;
+}
 
 // I found no better way for now
 var oldHref = window.location.href;
 setInterval(function() {
 	if (oldHref !== window.location.href) {
+		if (!observed && window.location.pathname.startsWith('/watch')) {
+			observer.observe(document, {
+				childList: true,
+				subtree: true,
+			});
+
+			observed = true;
+		}
+
 		dropdownMenu.classList.remove('ydb-show');
 		initialized = false;
 	}
