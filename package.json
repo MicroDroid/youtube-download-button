@@ -1,6 +1,6 @@
 {
   "name": "youtube-download-button",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Download YouTube videos using a button next to Subscribe one",
   "scripts": {
     "build": "node utils/build.js",
@@ -21,6 +21,6 @@
   },
   "dependencies": {
     "sanitize-filename": "^1.6.1",
-    "ytdl-core": "^0.18.7"
+    "ytdl-core": "^0.20.1"
   }
 }
