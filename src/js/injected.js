@@ -97,7 +97,7 @@ function getInfo() {
 			else
 				link.innerText = 'Video: ' + format.resolution + '/' + format.encoding + ' @ ' + format.bitrate 
 					+ 'Mbps' + (format.fps ? ' ~' + format.fps + 'fps' : '');
-			link.download = sanitizeFilename(data.player_response.title);
+			link.download = sanitizeFilename(data.player_response.videoDetails.title);
 			link.className = format.isAudio ? 'ydb-audio' : 'ydb-video';
 			dropdownMenu.append(link);
 		}
