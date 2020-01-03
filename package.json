@@ -1,6 +1,6 @@
 {
   "name": "youtube-download-button",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Download YouTube videos using a button next to Subscribe one",
   "scripts": {
     "build": "cross-env NODE_ENV=production node utils/build.js && sed -i 's/([0,1],eval)(\"this\")/undefined/g' build/injected.bundle.js",
@@ -22,6 +22,6 @@
   },
   "dependencies": {
     "sanitize-filename": "^1.6.1",
-    "ytdl-core": "^0.29.6"
+    "ytdl-core": "^0.29.7"
   }
 }

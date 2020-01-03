@@ -50,6 +50,9 @@ function getInfo() {
 
 	ytdl.getInfo(window.location.href).then(function(data) {
 		data.formats = data.formats.map(function(format) {
+			if (!format.type) // idk if this is a grave mistake
+				return;
+
 			format.isAudio = format.type.startsWith('audio');
 			if (format.resolution)
 				format.resolution = format.resolution.split(' ')[0];
@@ -95,7 +98,7 @@ function getInfo() {
 			if (format.isAudio)
 				link.innerText = 'Audio: ' + format.audioBitrate + 'kbps' + '/' + format.audioEncoding;
 			else
-				link.innerText = 'Video: ' + format.resolution + '/' + format.encoding + ' @ ' + format.bitrate 
+				link.innerText = 'Video: ' + format.resolution + '/' + format.encoding + ' @ ' + format.bitrate
 					+ 'Mbps' + (format.fps ? ' ~' + format.fps + 'fps' : '');
 			link.download = sanitizeFilename(data.player_response.videoDetails.title);
 			link.className = format.isAudio ? 'ydb-audio' : 'ydb-video';
