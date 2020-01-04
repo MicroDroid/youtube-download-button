@@ -49,25 +49,24 @@ function getInfo() {
 	dropdownMenu.append(loading);
 
 	ytdl.getInfo(window.location.href).then(function(data) {
-		data.formats = data.formats.map(function(format) {
-			if (!format.type) // idk if this is a grave mistake
-				return;
+		data.formats = data.formats
+			.filter(format => !!format.mimeType) // bad idea or not?
+			.map(format => {
+				format.isAudio = format.mimeType.startsWith('audio');
 
-			format.isAudio = format.type.startsWith('audio');
-			if (format.resolution)
-				format.resolution = format.resolution.split(' ')[0];
-			return format;
-		});
+				if (format.qualityLabel)
+					format.qualityLabel = format.qualityLabel.split(' ')[0];
+
+				return format;
+			});
 
 		// Remove video-only sources
-		data.formats = data.formats.filter(function(format) {
-			return !!format.audioBitrate;
-		});
+		data.formats = data.formats.filter(format => !!format.audioBitrate);
 
 		// Brain-twister incoming!
-		data.formats = data.formats.sort(function(a, b) {
-			if (a.type.startsWith('audio'))
-				if (b.type.startsWith('audio'))
+		data.formats = data.formats.sort((a, b) => {
+			if (a.mimeType.startsWith('audio'))
+				if (b.mimeType.startsWith('audio'))
 					if (a.audioBitrate > b.audioBitrate)
 						return -1;
 					else if (a.audioBitrate < b.audioBitrate)
@@ -76,12 +75,12 @@ function getInfo() {
 						return 0;
 				else
 					return 1;
-			else if (b.type.startsWith('audio'))
+			else if (b.mimeType.startsWith('audio'))
 				return -1;
 			else
-				if (parseInt(a.resolution.split('p')[0]) > parseInt(b.resolution.split('p')[0]))
+				if (parseInt(a.qualityLabel.split('p')[0]) > parseInt(b.qualityLabel.split('p')[0]))
 					return -1;
-				else if (parseInt(a.resolution.split('p')[0]) < parseInt(b.resolution.split('p')[0]))
+				else if (parseInt(a.qualityLabel.split('p')[0]) < parseInt(b.qualityLabel.split('p')[0]))
 					return 1;
 				else
 					return 0;
@@ -89,17 +88,17 @@ function getInfo() {
 
 		loading.remove();
 
-		var link;
+		let link;
 		for (let i = 0; i < data.formats.length; i++) {
 			var format = data.formats[i];
 			link = document.createElement('a');
 			link.href = format.url;
 			link.target = '_blank';
 			if (format.isAudio)
-				link.innerText = 'Audio: ' + format.audioBitrate + 'kbps' + '/' + format.audioEncoding;
+				link.innerText = 'Audio: ' + format.audioBitrate + 'kbps' + '/' + format.codecs;
 			else
-				link.innerText = 'Video: ' + format.resolution + '/' + format.encoding + ' @ ' + format.bitrate
-					+ 'Mbps' + (format.fps ? ' ~' + format.fps + 'fps' : '');
+				link.innerText = 'Video: ' + format.qualityLabel + '/' + format.container + ' @ ' + (format.bitrate /1024/1024).toFixed(1)
+					+ 'mbps' + (format.fps ? ' ~' + format.fps + 'fps' : '');
 			link.download = sanitizeFilename(data.player_response.videoDetails.title);
 			link.className = format.isAudio ? 'ydb-audio' : 'ydb-video';
 			dropdownMenu.append(link);
@@ -107,7 +106,7 @@ function getInfo() {
 	});
 }
 
-var observer = new MutationObserver(function() {
+var observer = new MutationObserver(() => {
 	subscribeBtn = document.querySelector('#meta-contents #subscribe-button');
 	var subscribePaperBtn = subscribeBtn ? subscribeBtn.getElementsByTagName('paper-button')[0] : null;
 	if (subscribeBtn && subscribePaperBtn) {
