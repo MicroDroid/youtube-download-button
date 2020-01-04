@@ -1,6 +1,6 @@
 {
   "name": "youtube-download-button",
-  "version": "0.1.9",
+  "version": "1.0.0",
   "description": "Download YouTube videos using a button next to Subscribe one",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack && sed -i 's/([0,1],eval)(\"this\")/undefined/g' build/injected.bundle.js"
