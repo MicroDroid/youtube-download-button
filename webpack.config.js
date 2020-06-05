@@ -10,6 +10,7 @@ const fileExtensions = ['jpg', 'jpeg', 'png', 'gif', 'eot', 'otf', 'svg', 'ttf',
 const options = {
   entry: {
     injected: path.join(__dirname, 'src', 'js', 'injected.js'),
+    background: path.join(__dirname, 'src', 'js', 'background.js')
   },
   output: {
     path: path.join(__dirname, 'build'),
@@ -43,17 +44,11 @@ const options = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
 
-    new CopyWebpackPlugin([{
-      from: 'src/manifest.json',
-      transform: function (content, path) {
-        // generates the manifest file using the package.json informations
-        return Buffer.from(JSON.stringify({
-          description: process.env.npm_package_description,
-          version: process.env.npm_package_version,
-          ...JSON.parse(content.toString())
-        }))
-      }
-    }]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/manifest.json', to: 'manifest.json'}
+      ]
+    }),
 
     new WriteFilePlugin()
   ]
