@@ -1,9 +1,9 @@
 const webpack = require('webpack'),
-    path = require('path'),
-    { CleanWebpackPlugin } = require('clean-webpack-plugin'),
-    CopyWebpackPlugin = require('copy-webpack-plugin'),
-    HtmlWebpackPlugin = require('html-webpack-plugin'),
-    WriteFilePlugin = require('write-file-webpack-plugin');
+  path = require('path'),
+  { CleanWebpackPlugin } = require('clean-webpack-plugin'),
+  CopyWebpackPlugin = require('copy-webpack-plugin'),
+  HtmlWebpackPlugin = require('html-webpack-plugin'),
+  WriteFilePlugin = require('write-file-webpack-plugin');
 
 const fileExtensions = ['jpg', 'jpeg', 'png', 'gif', 'eot', 'otf', 'svg', 'ttf', 'woff', 'woff2'];
 
@@ -46,8 +46,17 @@ const options = {
 
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'src/manifest.json', to: 'manifest.json'}
-      ]
+        {
+          from: 'src/manifest.json', to: 'manifest.json',
+          transform: function (content, path) {
+            // generates the manifest file using the package.json informations
+            return Buffer.from(JSON.stringify({
+              description: process.env.npm_package_description,
+              version: process.env.npm_package_version,
+              ...JSON.parse(content.toString())
+            }))
+          }
+        }]
     }),
 
     new WriteFilePlugin()
