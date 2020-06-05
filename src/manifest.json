@@ -18,8 +18,16 @@
   },
   "permissions": [
     "https://www.youtube.com/",
-    "http://www.youtube.com/"
+    "http://www.youtube.com/",
+    "webRequest",
+    "webRequestBlocking"
   ],
+  "background": {
+    "scripts": [
+      "background.bundle.js"
+    ],
+    "persistent": true
+  },
   "browser_action": {
       "default_icon": "48x48.png",
       "default_title": "Youtube Download Button"
