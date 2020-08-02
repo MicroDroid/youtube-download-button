@@ -1,5 +1,7 @@
 # YouTube Download Button
 
+> BTC donations: `16dt5DdjGvduZ3KZcFrwsBA82qqfrcbeUQ`
+
 This is a Chrome extension to show a very integrated download button on YouTube.
 
 ![Light screenshot](https://i.imgur.com/9ODHDXj.png)
